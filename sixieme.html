@@ -1,95 +1,93 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Quiz Vocabulaire Anglais - niveau A1/A1+</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            font-family: 'arial', sans-serif;
-            background: linear-gradient(135deg, #78DADE 0%, #fad0c4 100%);
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 650px;
-            margin: auto;
-            background: #fff;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-        }
-        h1 {
-            text-align: center;
-            color: #3CB5B5;
-            margin-bottom: 30px;
-        }
-        .question {
-            margin-bottom: 25px;
-            padding: 15px;
-            border-radius: 10px;
-            background: #f0f0f0;
-            transition: transform 0.2s;
-        }
-        .question:hover {
-            transform: scale(1.02);
-        }
-        label {
-            display: block;
-            background: #fff;
-            margin: 8px 0;
-            padding: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        label:hover {
-            background: #78DADE;
-            color: #fff;
-        }
-        input[type="radio"] {
-            margin-right: 10px;
-        }
-        button {
-            display: block;
-            margin: 20px auto;
-            padding: 15px 25px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #fff;
-            background: #78DADE;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        button:hover {
-            background: #78DADE;
-        }
-        #resultat {
-            text-align: center;
-            font-size: 22px;
-            margin-top: 25px;
-            font-weight: bold;
-        }
-        @media (max-width: 700px) {
-            .container { width: 95%; padding: 20px; }
-            button { font-size: 16px; padding: 12px 20px; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Quiz Anglais</title>
+  
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      color: white;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+    }
+
+    #question {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      display: block;
+      margin: 10px auto;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 200px;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    .correct {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .wrong {
+      background-color: #f44336;
+      color: white;
+    }
+
+    #nextBtn {
+      margin-top: 20px;
+      display: none;
+      background: #333;
+      color: white;
+    }
+
+    #score {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+    
+    #feedback {
+      margin-top: 15px;
+      font-size: 20px;
+      font-weight: bold;
+      
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="container">
-    <h1>Quiz Vocabulaire Anglais niveau Sixième - A1/A1+</h1>
-    <div id="quiz"></div>
-    <button id="validerBtn">Valider</button>
-    <button id="recommencerBtn" style="display:none;">Recommencer</button>
-    <div id="resultat"></div>
-</div>
+<h1>🇬🇧 Quiz d’anglais</h1>
+
+<div id="question"></div>
+<div id="reponses"></div>
+<div id="feedback"></div>
+
+
+<div id="score"></div>
+
+<button id="recommencerBtn" style="display:none;">🔁 Recommencer</button>  
 
 <script>
-const questions = [
+
+const NOMBRE_QUESTIONS = 10;  
+  
+const quiz = [
   // FAMILY
   { question: "family", choix: ["famille", "ami", "voisin"], bonneReponse: 0 },
   { question: "parents", choix: ["enfants", "parents", "amis"], bonneReponse: 1 },
@@ -176,61 +174,119 @@ const questions = [
   { question: "angry", choix: ["calme", "énervé", "joyeux"], bonneReponse: 1 },
   { question: "afraid", choix: ["courageux", "effrayé", "content"], bonneReponse: 1 }
 ];
+  
+let indexQuestion = 0;
+let score = 0;
 
 function melangerTableau(tab){
-    for(let i=tab.length-1;i>0;i--){
-        const j=Math.floor(Math.random()*(i+1));
-        [tab[i],tab[j]]=[tab[j],tab[i]];
+    for(let i = tab.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [tab[i], tab[j]] = [tab[j], tab[i]];
     }
 }
+  
+melangerTableau(quiz);
 
-const nombreQuestions = 10;
-let quizSelection = [];
+// On prend seulement X questions
+let quizSelection = quiz.slice(0, NOMBRE_QUESTIONS);
+  
+function afficherQuestion() {
+  const q = quizSelection[indexQuestion];
 
-function afficherQuiz(){
-    const quizDiv = document.getElementById("quiz");
-    quizDiv.innerHTML="";
-    melangerTableau(questions);
-    quizSelection = questions.slice(0,nombreQuestions);
+  document.getElementById("question").textContent = q.question;
+  document.getElementById("reponses").innerHTML = "";
+  document.getElementById("feedback").textContent = "";
 
-    quizSelection.forEach((q,index)=>{
-        const div=document.createElement("div");
-        div.classList.add("question");
-        let html=`<p>${index+1}. Traduire : <strong>${q.question}</strong></p>`;
-        const choixMelanges=[...q.choix];
-        melangerTableau(choixMelanges);
-        choixMelanges.forEach(c=>{
-            html+=`<label><input type="radio" name="q${index}" value="${c}">${c}</label>`;
-        });
-        div.innerHTML=html;
-        quizDiv.appendChild(div);
+  // 👉 On copie les choix avec leur index
+  let choixMelanges = q.choix.map((choix, index) => ({
+    texte: choix,
+    correct: index === q.bonneReponse
+  }));
+
+  // 👉 On mélange
+  melangerTableau(choixMelanges);
+
+  // 👉 On affiche
+  choixMelanges.forEach((choixObj, index) => {
+    const button = document.createElement("button");
+    button.textContent = choixObj.texte;
+
+    button.addEventListener("click", () => {
+      verifierReponse(index, choixMelanges);
     });
 
-    document.getElementById("resultat").innerHTML="";
-    document.getElementById("recommencerBtn").style.display="none";
-    document.getElementById("validerBtn").style.display="block";
+    document.getElementById("reponses").appendChild(button);
+  });
 }
 
-function validerQuiz(){
-    let score=0;
-    quizSelection.forEach((q,index)=>{
-        const reponse=document.querySelector(`input[name="q${index}"]:checked`);
-        if(reponse && reponse.value===q.choix[q.bonneReponse]) score++;
-    });
-    const pourcentage=(score/quizSelection.length)*100;
-    let niveau="";
-    if(pourcentage>=80) niveau="Excellent";
-    else if(pourcentage>=60) niveau="Bon 👍";
-    else if(pourcentage>=40) niveau="Moyen";
-    else niveau="À améliorer";
+function verifierReponse(indexChoisi, choixMelanges) {
+  const buttons = document.querySelectorAll("#reponses button");
 
-    document.getElementById("resultat").innerHTML=`Score : ${score} / ${quizSelection.length}<br>Niveau : ${niveau}`;
-    document.getElementById("validerBtn").style.display="none";
-    document.getElementById("recommencerBtn").style.display="block";
+  buttons.forEach((btn, index) => {
+    btn.disabled = true;
+
+    if (choixMelanges[index].correct) {
+      btn.classList.add("correct");
+    } else if (index === indexChoisi) {
+      btn.classList.add("wrong");
+    }
+  });
+
+  if (choixMelanges[indexChoisi].correct) {
+    score++;
+    document.getElementById("feedback").textContent = "✅ Bonne réponse !";
+  } else {
+    document.getElementById("feedback").textContent = "❌ Mauvaise réponse !";
+  }
+
+  setTimeout(() => {
+  indexQuestion++;
+
+  if (indexQuestion < quizSelection.length) {
+    afficherQuestion();
+  } else {
+    afficherScore();
+  }
+}, 2000); // 2 secondes
 }
 
-document.getElementById("validerBtn").addEventListener("click", validerQuiz);
-document.getElementById("recommencerBtn").addEventListener("click", afficherQuiz);
 
-afficherQuiz();
+function afficherScore() {
+  document.getElementById("question").textContent = "Quiz terminé !";
+  document.getElementById("reponses").innerHTML = "";
+
+
+  document.getElementById("score").textContent =
+    "Score : " + score + " / " + quizSelection.length;
+
+  document.getElementById("recommencerBtn").style.display = "block";
+} 
+
+
+ function afficherQuiz() {
+  indexQuestion = 0;
+  score = 0;
+
+  // On remélange les questions
+  melangerTableau(quiz);
+  quizSelection = quiz.slice(0, Math.min(NOMBRE_QUESTIONS, quiz.length));
+
+  document.getElementById("score").textContent = "";
+  document.getElementById("recommencerBtn").style.display = "none";
+
+  afficherQuestion();
+}
+
+  document
+  .getElementById("recommencerBtn")
+  .addEventListener("click", afficherQuiz);
+  
+
+
+
+  
+afficherQuestion();
 </script>
+
+</body>
+</html>

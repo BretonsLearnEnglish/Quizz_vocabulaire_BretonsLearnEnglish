@@ -1,12 +1,12 @@
-<script>
-
 const NOMBRE_QUESTIONS = 10;
 
+if (typeof quiz === "undefined") {
+  console.error("Le quiz n'est pas chargé !");
+}
 
 let indexQuestion = 0;
 let score = 0;
 
-quiz[indexQuestion]
 
 function melangerTableau(tab){
   for(let i = tab.length - 1; i > 0; i--){
@@ -72,11 +72,11 @@ function verifierReponse(indexChoisi, choixMelanges) {
     indexQuestion++;
 
     if (indexQuestion < quizSelection.length) {
-      afficherQuestion();
+      afficherQuiz();
     } else {
       afficherScore();
     }
-  }, 1500);
+  }, 1200);
 }
 
 function afficherScore() {
@@ -110,5 +110,4 @@ document
 
 afficherQuestion();
 
-</script>
 

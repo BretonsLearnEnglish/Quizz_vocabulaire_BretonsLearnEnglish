@@ -1,23 +1,33 @@
+// =================== Configuration ===================
 const NOMBRE_QUESTIONS = 10;
 
-if (typeof quiz === "undefined") {
-  console.error("Le quiz n'est pas chargé !");
-}
+// Exemple de quiz (remplace avec ton tableau complet)
+const quiz = [
+  { question: "family", choix: ["famille", "ami", "voisin"], bonneReponse: 0 },
+  { question: "baby", choix: ["bébé", "enfant", "adulte"], bonneReponse: 0 },
+  { question: "wedding", choix: ["mariage", "anniversaire", "fête"], bonneReponse: 0 },
+  { question: "to spend time", choix: ["passer du temps", "travailler", "courir"], bonneReponse: 0 },
+  { question: "to visit", choix: ["visiter", "ignorer", "fermer"], bonneReponse: 0 },
+  { question: "lion", choix: ["lion", "tigre", "zèbre"], bonneReponse: 0 },
+  { question: "forest", choix: ["forêt", "désert", "plage"], bonneReponse: 0 },
+  { question: "lake", choix: ["lac", "mer", "rivière"], bonneReponse: 0 },
+  { question: "beautiful", choix: ["beau", "moche", "grand"], bonneReponse: 0 },
+  { question: "to travel", choix: ["voyager", "rester", "marcher"], bonneReponse: 0 }
+];
 
 let indexQuestion = 0;
 let score = 0;
+let quizSelection = [];
 
-
-function melangerTableau(tab){
-  for(let i = tab.length - 1; i > 0; i--){
+// =================== Fonctions utilitaires ===================
+function melangerTableau(tab) {
+  for (let i = tab.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [tab[i], tab[j]] = [tab[j], tab[i]];
   }
 }
 
-melangerTableau(quiz);
-let quizSelection = quiz.slice(0, NOMBRE_QUESTIONS);
-
+// =================== Affichage quiz ===================
 function afficherQuestion() {
   const q = quizSelection[indexQuestion];
 
@@ -25,40 +35,31 @@ function afficherQuestion() {
   document.getElementById("reponses").innerHTML = "";
   document.getElementById("feedback").textContent = "";
 
-  // 📊 progression
+  // 📊 Progression
   let progression = ((indexQuestion + 1) / quizSelection.length) * 100;
   document.getElementById("progress").style.width = progression + "%";
 
-  let choixMelanges = q.choix.map((choix, index) => ({
+  // Mélange des choix
+  let choixMelanges = q.choix.map((choix, idx) => ({
     texte: choix,
-    correct: index === q.bonneReponse
+    correct: idx === q.bonneReponse
   }));
-
   melangerTableau(choixMelanges);
 
-  choixMelanges.forEach((choixObj, index) => {
+  choixMelanges.forEach((choixObj, idx) => {
     const button = document.createElement("button");
     button.textContent = choixObj.texte;
-
-    button.addEventListener("click", () => {
-      verifierReponse(index, choixMelanges);
-    });
-
+    button.addEventListener("click", () => verifierReponse(idx, choixMelanges));
     document.getElementById("reponses").appendChild(button);
   });
 }
 
 function verifierReponse(indexChoisi, choixMelanges) {
   const buttons = document.querySelectorAll("#reponses button");
-
-  buttons.forEach((btn, index) => {
+  buttons.forEach((btn, idx) => {
     btn.disabled = true;
-
-    if (choixMelanges[index].correct) {
-      btn.classList.add("correct");
-    } else if (index === indexChoisi) {
-      btn.classList.add("wrong");
-    }
+    if (choixMelanges[idx].correct) btn.classList.add("correct");
+    else if (idx === indexChoisi) btn.classList.add("wrong");
   });
 
   if (choixMelanges[indexChoisi].correct) {
@@ -70,29 +71,21 @@ function verifierReponse(indexChoisi, choixMelanges) {
 
   setTimeout(() => {
     indexQuestion++;
-
-    if (indexQuestion < quizSelection.length) {
-  afficherQuestion(); // ✅ CORRECT
-} else {
-  afficherScore();
-}
-   
+    if (indexQuestion < quizSelection.length) afficherQuestion();
+    else afficherScore();
   }, 1200);
 }
 
 function afficherScore() {
   document.getElementById("question").textContent = "🎉 Quiz terminé !";
   document.getElementById("reponses").innerHTML = "";
-
   document.getElementById("progress").style.width = "100%";
-
-  document.getElementById("score").textContent =
-    "Score : " + score + " / " + quizSelection.length;
-
+  document.getElementById("score").textContent = `Score : ${score} / ${quizSelection.length}`;
   document.getElementById("recommencerBtn").style.display = "block";
 }
 
-function afficherQuestion() {
+// =================== Démarrage et réinitialisation ===================
+function afficherQuiz() {
   indexQuestion = 0;
   score = 0;
 
@@ -102,17 +95,22 @@ function afficherQuestion() {
   document.getElementById("score").textContent = "";
   document.getElementById("recommencerBtn").style.display = "none";
 
-  afficherQuizz();
+  afficherQuestion();
 }
 
-document
-.getElementById("recommencerBtn")
-.addEventListener("click", afficherQuiz);
-
-afficherQuestion();
+// =================== Menu ===================
+function startQuiz() {
+  document.getElementById("menu").style.display = "none";
+  document.querySelector(".container").style.display = "block";
+  afficherQuiz();
+}
 
 function retourMenu() {
-  document.getElementById("quiz").style.display = "none";
+  document.querySelector(".container").style.display = "none";
   document.getElementById("menu").style.display = "block";
 }
 
+// =================== Listeners ===================
+document.getElementById("startQuizBtn").addEventListener("click", startQuiz);
+document.getElementById("recommencerBtn").addEventListener("click", afficherQuiz);
+document.getElementById("menuBtn").addEventListener("click", retourMenu);

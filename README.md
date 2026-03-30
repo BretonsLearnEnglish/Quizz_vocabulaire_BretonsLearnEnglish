@@ -1,8 +1,8 @@
 # Quizz_vocabulaire_anglais
 
-Petit texte qui décrit ton site en une phrase claire.
-Ex : *Un site web pour présenter mes projets et expériences.*
-Ce site web a pour objectif d'aiderles élèves de façon ludique à intégrer le vocabulaire du programme de langues en Anglais LV1.
+Ce site web a pour objectif d'aider les élèves de façon ludique à intégrer le vocabulaire du programme de langues en Anglais LV1.
+Le contenu de ce site se base sur le programme d'anglais pour les classes de collège, disponible sur le site de l'éducation nationale.
+https://www.education.gouv.fr/sites/default/files/annexe-3-programme-d-anglais-pour-les-classes-de-coll-ge-440358.pdf
 ---
 
 ## 🚀 Voir le site en ligne

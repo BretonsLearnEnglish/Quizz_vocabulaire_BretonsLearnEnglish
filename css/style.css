@@ -119,9 +119,12 @@ button:hover {
 }
 
 #recommencerBtn {
-  background-color: #003087 !important; /* bleu British */
+  background-color: #003087; /* bleu British */
   color: #fff;
-  text-align: center !important;
+  display: block;
+  margin: 20px auto;
+  width: 150px;    /* largeur fixe pour plus d’harmonie */
+  text-align: center;
 }
 
 #menuBtn, #startQuizBtn {

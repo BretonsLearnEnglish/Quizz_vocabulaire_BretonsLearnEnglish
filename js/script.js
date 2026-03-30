@@ -91,6 +91,8 @@ function retourMenu() {
 }
 
 // Listeners
-document.getElementById("startQuizBtn").addEventListener("click", startQuiz);
-document.getElementById("recommencerBtn").addEventListener("click", afficherQuiz);
-document.getElementById("menuBtn").addEventListener("click", retourMenu);
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("startQuizBtn").addEventListener("click", startQuiz);
+    document.getElementById("recommencerBtn").addEventListener("click", afficherQuiz);
+    document.getElementById("menuBtn").addEventListener("click", retourMenu);
+});

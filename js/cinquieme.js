@@ -69,7 +69,7 @@ const quiz = [ /* questions 5e */
 { question: "reindeer", choix: ["renne", "cerf", "cheval"], bonneReponse: 0 },
 { question: "kiwi", choix: ["kiwi (oiseau)", "pomme", "poire"], bonneReponse: 0 },
 { question: "leopard", choix: ["léopard", "tigre", "lion"], bonneReponse: 0 },
-{ question: "tiger", choix: ["tigre", "lion", "chat"], bonneReponse: 0 }
+{ question: "tiger", choix: ["tigre", "lion", "chat"], bonneReponse: 0 },
 
 { question: "to wash one's hands", choix: ["se laver les mains", "se brosser les dents", "se coucher"], bonneReponse: 0 },
 { question: "to brush one's teeth", choix: ["se brosser les dents", "se laver", "manger"], bonneReponse: 0 },
@@ -129,7 +129,7 @@ const quiz = [ /* questions 5e */
 { question: "canyon", choix: ["canyon", "rivière", "forêt"], bonneReponse: 0 },
 { question: "valley", choix: ["vallée", "montagne", "désert"], bonneReponse: 0 },
 { question: "rock", choix: ["rocher", "sable", "eau"], bonneReponse: 0 },
-{ question: "bush", choix: ["buisson", "arbre", "fleur"], bonneReponse: 0 }
+{ question: "bush", choix: ["buisson", "arbre", "fleur"], bonneReponse: 0 },
 
 { question: "once upon a time", choix: ["il était une fois", "maintenant", "demain"], bonneReponse: 0 },
 { question: "so far so good", choix: ["jusqu’ici tout va bien", "ça va mal", "c’est fini"], bonneReponse: 0 },
@@ -274,6 +274,6 @@ const quiz = [ /* questions 5e */
 { question: "to like", choix: ["aimer", "détester", "ignorer"], bonneReponse: 0 },
 { question: "beauty", choix: ["beauté", "laideur", "tristesse"], bonneReponse: 0 },
 { question: "joy", choix: ["joie", "tristesse", "peur"], bonneReponse: 0 },
-{ question: "sadness", choix: ["tristesse", "joie", "colère"], bonneReponse: 0 }
+{ question: "sadness", choix: ["tristesse", "joie", "colère"], bonneReponse: 0 },
 
 ];

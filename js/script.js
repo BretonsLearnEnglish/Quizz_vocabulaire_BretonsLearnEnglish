@@ -6,8 +6,6 @@ let indexQuestion = 0;
 let score = 0;
 let quizSelection = [];
 
-let playerName = "";
-let niveau = "";
 
 function melangerTableau(tab) {
   for (let i = tab.length - 1; i > 0; i--) {
@@ -90,59 +88,14 @@ function afficherQuiz() {
 }
 
 function startQuiz() {
-  playerName = document.getElementById("playerName").value.trim();
-  niveau = document.getElementById("niveau").value;
-
-  if (!playerName) {
-    alert("Veuillez entrer un nom !");
-    return;
-  }
+  playerName = "Joueur"; // valeur par défaut
+  niveau = "6eme";       // valeur fixe pour cette page
 
   document.getElementById("menu").style.display = "none";
   document.querySelector(".container").style.display = "block";
 
-  afficherQuiz();
 }
 
-function retourMenu() {
-  document.querySelector(".container").style.display = "none";
-  document.getElementById("menu").style.display = "block";
-}
-
-function sauvegarderScore() {
-  const classement = JSON.parse(localStorage.getItem("classement")) || [];
-
-  classement.push({
-    nom: playerName,
-    score: score,
-    niveau: niveau,
-    date: new Date().toISOString()
-  });
-
-  localStorage.setItem("classement", JSON.stringify(classement));
-}
-
-function obtenirTop10(niveauChoisi) {
-  const classement = JSON.parse(localStorage.getItem("classement")) || [];
-
-  return classement
-    .filter(joueur => joueur.niveau === niveauChoisi)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 10);
-}
-
-function afficherClassement() {
-  const top10 = obtenirTop10(niveau);
-
-  const container = document.getElementById("classement");
-  container.innerHTML = "<h3>🏆 Classement</h3>";
-
-  top10.forEach((joueur, index) => {
-    const div = document.createElement("div");
-    div.textContent = `${index + 1}. ${joueur.nom} - ${joueur.score}`;
-    container.appendChild(div);
-  });
-}
 
 // Listeners
 document.addEventListener("DOMContentLoaded", function() {

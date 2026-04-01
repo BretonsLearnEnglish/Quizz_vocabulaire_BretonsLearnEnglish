@@ -86,7 +86,7 @@ function verifierReponse(indexChoisi, choixMelanges) {
     } else {
       afficherScore();
     }
-  }, 1000);
+  }, 700);
 }
 
 function afficherScore() {

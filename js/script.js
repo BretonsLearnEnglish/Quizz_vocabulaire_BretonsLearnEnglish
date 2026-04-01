@@ -1,4 +1,3 @@
-<script>
 
 const NOMBRE_QUESTIONS = 10;
 
@@ -107,5 +106,3 @@ document
 .addEventListener("click", afficherQuiz);
 
 afficherQuestion();
-
-</script>

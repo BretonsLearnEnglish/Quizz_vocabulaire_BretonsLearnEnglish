@@ -5,11 +5,17 @@ const NOMBRE_QUESTIONS = 10;
 let indexQuestion = 0;
 let score = 0;
 
-function melangerTableau(tab){
+function melangerTableau(tab) {
   for(let i = tab.length - 1; i > 0; i--){
     const j = Math.floor(Math.random() * (i + 1));
     [tab[i], tab[j]] = [tab[j], tab[i]];
   }
+}
+
+console.log(quiz);
+
+if (typeof quiz === "undefined") {
+    console.error("Le quiz n'est pas chargé !");
 }
 
 melangerTableau(quiz);
@@ -23,21 +29,21 @@ function afficherQuestion() {
   document.getElementById("feedback").textContent = "";
 
   // 📊 progression
-  let progression = ((indexQuestion + 1) / quizSelection.length) * 100;
+let progression = ((indexQuestion + 1) / quizSelection.length) * 100;
   document.getElementById("progress").style.width = progression + "%";
 
-  let choixMelanges = q.choix.map((choix, index) => ({
+let choixMelanges = q.choix.map((choix, index) => ({
     texte: choix,
     correct: index === q.bonneReponse
   }));
 
-  melangerTableau(choixMelanges);
+melangerTableau(choixMelanges);
 
-  choixMelanges.forEach((choixObj, index) => {
+choixMelanges.forEach((choixObj, index) => {
     const button = document.createElement("button");
     button.textContent = choixObj.texte;
 
-    button.addEventListener("click", () => {
+button.addEventListener("click", () => {
       verifierReponse(index, choixMelanges);
     });
 
@@ -51,7 +57,7 @@ function verifierReponse(indexChoisi, choixMelanges) {
   buttons.forEach((btn, index) => {
     btn.disabled = true;
 
-    if (choixMelanges[index].correct) {
+  if (choixMelanges[index].correct) {
       btn.classList.add("correct");
     } else if (index === indexChoisi) {
       btn.classList.add("wrong");
@@ -65,7 +71,7 @@ function verifierReponse(indexChoisi, choixMelanges) {
     document.getElementById("feedback").textContent = "❌ Mauvaise réponse !";
   }
 
-  setTimeout(() => {
+setTimeout(() => {
     indexQuestion++;
 
     if (indexQuestion < quizSelection.length) {
@@ -101,8 +107,12 @@ function afficherQuiz() {
   afficherQuestion();
 }
 
-document
-.getElementById("recommencerBtn")
-.addEventListener("click", afficherQuiz);
+document.addEventListener("DOMContentLoaded", function() {
 
-afficherQuestion();
+  document
+    .getElementById("recommencerBtn")
+    .addEventListener("click", afficherQuiz);
+
+  afficherQuestion();
+
+});
